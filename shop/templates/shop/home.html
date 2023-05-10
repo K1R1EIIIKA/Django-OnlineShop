@@ -1,0 +1,15 @@
+{% extends 'shop/layout.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+
+    <h2>Главная страница</h2>
+
+    {% for cart in carts %}
+        {% for products in cart.cart_products.all %}
+            {{ products }}<br>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}
