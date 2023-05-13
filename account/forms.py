@@ -1,4 +1,4 @@
-from django.forms import TextInput, EmailInput, CharField, PasswordInput, ModelForm
+from django.forms import TextInput, EmailInput, CharField, PasswordInput, ModelForm, ImageField
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 
@@ -45,27 +45,29 @@ class UserInfoForm(ModelForm):
     class Meta:
         model = UserInfo
 
-        fields = ['phone', 'email', 'name', 'surname', 'patronymic']
+        fields = ['phone', 'email', 'name', 'surname', 'patronymic', 'image']
 
         widgets = {
             'phone': TextInput(attrs={
-                'class': 'form-account-control',
+                'class': 'form-control',
                 'placeholder': 'Телефон'
             }),
             'email': EmailInput(attrs={
-                'class': 'form-account-control',
+                'class': 'form-control',
                 'placeholder': 'Почта'
             }),
             'name': TextInput(attrs={
-                'class': 'form-account-control',
+                'class': 'form-control',
                 'placeholder': 'Имя'
             }),
             'surname': TextInput(attrs={
-                'class': 'form-account-control',
+                'class': 'form-control',
                 'placeholder': 'Фамилия'
             }),
             'patronymic': TextInput(attrs={
-                'class': 'form-account-control',
+                'class': 'form-control',
                 'placeholder': 'Отчество'
             }),
         }
+
+        image = ImageField()

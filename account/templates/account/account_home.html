@@ -3,9 +3,22 @@
 {% block title %}Личный кабинет{% endblock %}
 
 {% block content %}
+    <div class="pt-2 pl-2">
+        <div class="row mr-0">
+            <div class="col-md-3">
+                <h2>{{ user_info.user.username }}</h2>
+                <h5><strong>Имя:</strong> {{ user_info.name }}</h5>
+                <h5><strong>Фамилия:</strong> {{ user_info.surname }}</h5>
+                <h5><strong>Отчество:</strong> {{ user_info.patronymic }}</h5>
+                <h5><strong>Почта:</strong> {{ user_info.email }}</h5>
+                <h5><strong>Телефон:</strong> {{ user_info.phone }}</h5>
+            </div>
+            <img id="bbb" src=".{{ user_info.image.url }}" alt="пипецкапец(("
+                 style="max-width: 200px; max-height: 200px"><br>
 
-    <img id="bbb" src=".{{ user_info.image.url }}" alt="пипецкапец((" style="max-width: 150px; max-height: 150px"><br>
-
-    <a href="{% url 'settings' %}"><h4>Настройки аккаунта</h4></a>
-
+        </div>
+        <div class="mt-2">
+            <a href="{% url 'settings' %}"><h3>Настройки аккаунта</h3></a>
+        </div>
+    </div>
 {% endblock %}

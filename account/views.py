@@ -26,7 +26,7 @@ def settings(request):
     form = UserInfoForm(instance=user_info)
 
     if request.method == 'POST':
-        form = UserInfoForm(request.POST, instance=user_info)
+        form = UserInfoForm(request.POST, request.FILES, instance=user_info)
 
         if form.is_valid():
             if form.cleaned_data['email'] in UserInfo.objects.all().values_list('email', flat=True) and \
@@ -47,6 +47,7 @@ def settings(request):
 
     data = {
         'form': form,
+        'user_info': user_info,
         'error': error,
     }
 

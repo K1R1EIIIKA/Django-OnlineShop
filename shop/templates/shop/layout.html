@@ -5,15 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          crossorigin="anonymous">
+
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 
-<nav>
+<nav class="navbar navbar-expand-lg bg-light">
     {% if user.is_authenticated %}
-        <p>Вы вошли:
-            <a href="{% url 'account_home' %}"><strong>{{ user.username }}</strong></a>
-            <a href="{% url 'logout' %}"><strong>Выйти</strong></a></p>
+
     {% else %}
         <a class="nav-account" href="{% url 'login' %}">
             <div class="account">
@@ -21,11 +22,14 @@
             </div>
         </a>
     {% endif %}
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="/admin">Admin</a></li>
-        <li><a href="{% url 'account_home' %}">Account Home</a></li>
+    <ul class="navbar-nav mr-auto">
+        <li class="mr-3"><a href="{% url 'home' %}"><strong>Главная</strong></a></li>
+        <li class="mr-3"><a href="/admin"><strong>Админ панель</strong></a></li>
     </ul>
+
+    <p class="ml-auto mb-0">Вы вошли:
+        <a href="{% url 'account_home' %}" class="mr-2"><strong>{{ user.username }}</strong></a>
+        <a href="{% url 'logout' %}"><strong>Выйти</strong></a></p>
 </nav>
 
 <main>
