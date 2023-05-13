@@ -1,6 +1,8 @@
-from django.forms import TextInput, EmailInput, CharField, PasswordInput
+from django.forms import TextInput, EmailInput, CharField, PasswordInput, ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
+
+from .models import UserInfo
 
 
 class CreateUserForm(UserCreationForm):
@@ -37,3 +39,33 @@ class Authenticate(AuthenticationForm):
         attrs={
             'class': 'form-account-control',
         }))
+
+
+class UserInfoForm(ModelForm):
+    class Meta:
+        model = UserInfo
+
+        fields = ['phone', 'email', 'name', 'surname', 'patronymic']
+
+        widgets = {
+            'phone': TextInput(attrs={
+                'class': 'form-account-control',
+                'placeholder': 'Телефон'
+            }),
+            'email': EmailInput(attrs={
+                'class': 'form-account-control',
+                'placeholder': 'Почта'
+            }),
+            'name': TextInput(attrs={
+                'class': 'form-account-control',
+                'placeholder': 'Имя'
+            }),
+            'surname': TextInput(attrs={
+                'class': 'form-account-control',
+                'placeholder': 'Фамилия'
+            }),
+            'patronymic': TextInput(attrs={
+                'class': 'form-account-control',
+                'placeholder': 'Отчество'
+            }),
+        }

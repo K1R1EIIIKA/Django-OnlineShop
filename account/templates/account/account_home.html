@@ -5,6 +5,7 @@
 {% block content %}
 
     <img id="bbb" src=".{{ user_info.image.url }}" alt="пипецкапец((" style="max-width: 150px; max-height: 150px"><br>
-    <p class="text"><a class="text" style="color: #b2b2b2" href="{% url 'logout' %}?next=/">Выйти из аккаунта</a></p>
+
+    <a href="{% url 'settings' %}"><h4>Настройки аккаунта</h4></a>
 
 {% endblock %}

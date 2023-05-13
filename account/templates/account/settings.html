@@ -1,0 +1,15 @@
+{% extends 'shop/layout.html' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        {{ form }}<br>
+        {{ error }}<br>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+
+{% endblock %}

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from .models import *
-from .forms import CreateUserForm, Authenticate
+from .forms import *
 
 
 @login_required(login_url='login')
@@ -16,6 +16,41 @@ def account_home(request):
     }
 
     return render(request, 'account/account_home.html', data)
+
+
+@login_required(login_url='login')
+def settings(request):
+    error = ''
+
+    user_info = UserInfo.objects.get(user=request.user)
+    form = UserInfoForm(instance=user_info)
+
+    if request.method == 'POST':
+        form = UserInfoForm(request.POST, instance=user_info)
+
+        if form.is_valid():
+            if form.cleaned_data['email'] in UserInfo.objects.all().values_list('email', flat=True) and \
+                    UserInfo.objects.get(email=form.cleaned_data['email']).user != request.user:
+                error = 'Пользователь с таким email уже существует'
+
+                return render(request, 'account/settings.html', {'form': form, 'error': error})
+
+            if form.cleaned_data['phone'] in UserInfo.objects.all().values_list('phone', flat=True) and \
+                    UserInfo.objects.get(phone=form.cleaned_data['phone']).user != request.user:
+                error = 'Пользователь с таким номером телефона уже существует'
+
+                return render(request, 'account/settings.html', {'form': form, 'error': error})
+
+            form.save()
+        else:
+            error = 'Неправильно введенные данные'
+
+    data = {
+        'form': form,
+        'error': error,
+    }
+
+    return render(request, 'account/settings.html', data)
 
 
 def register(request):
@@ -48,6 +83,7 @@ def register(request):
             'form': form,
             'error': error
         }
+
         return render(request, 'registration/register.html', data)
 
 
@@ -81,6 +117,7 @@ def login_acc(request):
             'form': form,
             'error': error,
         }
+
     return render(request, 'registration/login.html', data)
 
 
