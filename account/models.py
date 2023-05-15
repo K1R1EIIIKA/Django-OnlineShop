@@ -13,5 +13,9 @@ class UserInfo(models.Model):
     surname = models.CharField(max_length=100, default='')
     patronymic = models.CharField(max_length=100, default='')
 
+    class Meta:
+        verbose_name = 'Информация о пользователе'
+        verbose_name_plural = 'Информация о пользователях'
+
     def __str__(self):
         return self.user.username + ' - ' + self.surname + ' ' + self.name + ' ' + self.patronymic

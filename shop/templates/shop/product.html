@@ -1,0 +1,22 @@
+{% extends 'shop/layout.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+
+    <div class="row mr-0">
+        <div class="col-md-6 col">
+            <h1 class="text-center mb-4">{{ product.name }}</h1>
+            <h4 class="">{{ product.description }}</h4>
+            <h5 class="">{{ product.price }}$</h5>
+
+        </div>
+
+        <div class="col-md-6 col">
+            <img src="{{ product.image.url }}" alt="" class="img-fluid" style="max-height: 400px; max-width: 400px">
+            <p class=""><strong>Рейтинг:</strong> {{ product.average_stars }}</p>
+        </div>
+
+    </div>
+
+{% endblock %}

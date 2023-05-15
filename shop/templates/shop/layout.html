@@ -13,26 +13,29 @@
 <body>
 
 <nav class="navbar navbar-expand-lg bg-light">
-    {% if user.is_authenticated %}
 
+    <ul class="navbar-nav mr-auto">
+        <li class="mr-3"><a href="{% url 'home' %}"><strong>Главная</strong></a></li>
+        <li class="mr-3"><a href="{% url 'products' %}"><strong>Товары</strong></a></li>
+        <li class="mr-3"><a href="/admin"><strong>Админ панель</strong></a></li>
+    </ul>
+    {% if user.is_authenticated %}
+        <p class="ml-auto mb-0">
+            Вы вошли:
+            <a href="{% url 'account_home' %}" class="mr-2"><strong>{{ user.username }}</strong></a>
+            <a href="{% url 'logout' %}"><strong>Выйти</strong></a>
+        </p>
     {% else %}
         <a class="nav-account" href="{% url 'login' %}">
             <div class="account">
-                <p style="padding: 3.75px 0 0 15px">Войдите</p>
+                <p class="ml-auto mb-0"><strong>Войдите</strong></p>
             </div>
         </a>
     {% endif %}
-    <ul class="navbar-nav mr-auto">
-        <li class="mr-3"><a href="{% url 'home' %}"><strong>Главная</strong></a></li>
-        <li class="mr-3"><a href="/admin"><strong>Админ панель</strong></a></li>
-    </ul>
 
-    <p class="ml-auto mb-0">Вы вошли:
-        <a href="{% url 'account_home' %}" class="mr-2"><strong>{{ user.username }}</strong></a>
-        <a href="{% url 'logout' %}"><strong>Выйти</strong></a></p>
 </nav>
 
-<main>
+<main class="pl-3 pt-3">
     {% block content %}
     {% endblock %}
 </main>

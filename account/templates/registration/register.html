@@ -3,26 +3,26 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-    <h1 class="text">Регистрация</h1>
+    <h2 class="text">Регистрация</h2>
 
     <form method="POST" action="">
 
-        <div class="form-account">
+        <div class="form-account mt-3">
             {% csrf_token %}
-            <p class="form-control-text">Имя пользователя: <br>{{ form.username }}<br></p>
-            <p class="form-control-text">Email: <br>{{ form.email }}<br></p>
-            <p class="form-control-text">Пароль: <br>{{ form.password1 }}<br></p>
-            <p class="form-control-text">Повторите пароль: <br>{{ form.password2 }}<br></p>
+            <p class="form-control-text">Имя пользователя: <br>{{ form.username }}</p>
+            <p class="form-control-text">Email: <br>{{ form.email }}</p>
+            <p class="form-control-text">Пароль: <br>{{ form.password1 }}</p>
+            <p class="form-control-text">Повторите пароль: <br>{{ form.password2 }}</p>
 
-            <li class="form-control-text">Ваш пароль не должен совпадать с вашим именем или другой персональной информацией или быть слишком похожим на нее.</li>
-            <li class="form-control-text" style="padding-top: 10px">Ваш пароль должен содержать как минимум 8 символов.</li>
-            <li class="form-control-text" style="padding-top: 10px">Ваш пароль не может быть одним из широко распространенных паролей.</li>
-            <li class="form-control-text" style="padding-top: 10px; padding-bottom: 40px">Ваш пароль не может состоять только из цифр.</li>
+            <li class="pb-2">Ваш пароль не должен совпадать с вашим именем или другой персональной информацией или быть слишком похожим на нее.</li>
+            <li class="pb-2">Ваш пароль должен содержать как минимум 8 символов.</li>
+            <li class="pb-2">Ваш пароль не может быть одним из широко распространенных паролей.</li>
+            <li class="pb-3">Ваш пароль не может состоять только из цифр.</li>
 
-            <button class="btn-account-create" type="submit">Создать Аккаунт</button>
+            <button class="btn btn-primary" type="submit">Создать Аккаунт</button>
             <span class="form-account-control">{{ error }}</span>
 
-            <p class="text">Уже есть аккаунт? <a class="text" style="color: #b2b2b2" href="{% url 'login' %}">Войти в личный кабинет</a>
+            <p class="text mt-3">Уже есть аккаунт? <a class="text" style="color: #b2b2b2" href="{% url 'login' %}">Войти в личный кабинет</a>
             </p>
         </div>
     </form>
