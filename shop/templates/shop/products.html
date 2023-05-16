@@ -8,10 +8,10 @@
     <div class="row mr-0">
 
         {% for product in products %}
-            <div class="col-lg-2 mb-3">
+             <div class="col-lg-2 mb-3">
                 <a href="{% url 'product' product.id %} ">
-                    <h4 class="mb-0">{{ product.name }}</h4>
-                    <h5 class="mb-0">{{ product.description }}</h5>
+                    <h4 class="mb-2">{{ product.name }}</h4>
+                    <h5 class="mb-2">{{ product.description }}</h5>
                 </a>
                 <p class="mb-0"><strong>Цена:</strong> {{ product.price }}$</p>
                 <p class="mb-0"><strong>Отзывов:</strong> {{ product.review_count }}</p>

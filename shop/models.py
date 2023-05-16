@@ -1,13 +1,14 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='static/images/products/', default='static/images/default.png')
-    description = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    count = models.PositiveIntegerField(default=0)
-    reviews = models.ManyToManyField('Review', blank=True)
+    name = models.CharField(max_length=100, verbose_name='Название')
+    image = models.ImageField(blank=True, default='static/images/default.png', verbose_name='Изображение')
+    description = models.CharField(max_length=255, verbose_name='Описание')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    count = models.PositiveIntegerField(default=0, verbose_name='Количество')
+    reviews = models.ManyToManyField('Review', blank=True, verbose_name='Отзывы')
 
     @property
     def review_count(self):
@@ -18,6 +19,7 @@ class Product(models.Model):
         total = 0
         for review in self.reviews.all():
             total += review.stars
+
         if self.review_count > 0:
             return total / self.review_count
         else:
@@ -32,8 +34,8 @@ class Product(models.Model):
 
 
 class CartProduct(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    count = models.IntegerField(default=0)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
+    count = models.IntegerField(default=0, verbose_name='Количество')
 
     class Meta:
         verbose_name = 'Товар в корзине'
@@ -44,8 +46,8 @@ class CartProduct(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    cart_products = models.ManyToManyField(CartProduct)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Пользователь')
+    cart_products = models.ManyToManyField(CartProduct, blank=True, verbose_name='Товары в корзине')
 
     class Meta:
         verbose_name = 'Корзина'
@@ -58,7 +60,7 @@ class Cart(models.Model):
             total += cart_product.product.price * cart_product.count
         return total
 
-    is_bought = models.BooleanField(default=False)
+    is_bought = models.BooleanField(default=False, verbose_name='Куплена')
 
     @property
     def total_count(self):
@@ -72,9 +74,9 @@ class Cart(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Пользователь')
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name='Корзина')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
 
     class Meta:
         verbose_name = 'Заказ'
@@ -85,15 +87,16 @@ class Order(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, default='Без названия')
-    text = models.CharField(max_length=255, default='Без текста')
-    stars = models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Пользователь')
+    title = models.CharField(max_length=100, default='Без названия', verbose_name='Название')
+    text = models.CharField(max_length=255, default='Без текста', verbose_name='Текст')
+    stars = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(5), MinValueValidator(1)],
+                                             verbose_name='Количество звезд')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата отзыва')
 
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
 
     def __str__(self):
-        return self.user.username + ' - ' + str(self.title) + ' ' + str(self.stars) + ' stars'
+        return self.user.username + ' - ' + str(self.title) + ' ' + str(self.stars) + '*'
